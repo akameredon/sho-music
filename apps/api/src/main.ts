@@ -1,0 +1,41 @@
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  app.setGlobalPrefix('v1');
+
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN?.split(',') ?? true,
+    credentials: true,
+  });
+
+  const config = new DocumentBuilder()
+    .setTitle('Sho Music API')
+    .setDescription(
+      'Sho Music 2.0 — AI-native music infrastructure. Rights-aware. Owns the core.',
+    )
+    .setVersion('2.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`🎵 Sho Music API running on http://localhost:${port}`);
+  console.log(`📖 Docs: http://localhost:${port}/docs`);
+}
+bootstrap();
