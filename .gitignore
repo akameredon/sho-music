@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Test / Coverage
+coverage/
+.nyc_output/
+
+# Docker volumes
+infrastructure/docker/data/
+
+# Secrets
+*.pem
+*.key
+secrets/
+
+# Audio / media (local only)
+*.mp3
+*.wav
+*.flac
+*.m4a
+uploads/
+tmp/
